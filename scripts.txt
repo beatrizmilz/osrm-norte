@@ -1,0 +1,31 @@
+# referencias
+# https://hub.docker.com/r/osrm/osrm-backend/
+# https://hub.docker.com/r/osrm/osrm-frontend/
+
+# Onde encontrar arquivos para baixar?
+# https://download.geofabrik.de/
+
+# arquivos do brasil: https://download.geofabrik.de/south-america/brazil/
+
+
+# baixar dados osm (nesse caso é norte)
+wget https://download.geofabrik.de/south-america/brazil/norte-latest.osm.pbf
+
+
+# alterar o arquivo car-modified.lua
+
+# extrair os dados
+docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-extract -p /data/car-modified.lua /data/norte-latest.osm.pbf
+
+docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-partition /data/norte-latest.osrm
+docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-customize /data/norte-latest.osrm
+
+
+
+# subir o servidor na porta 5001
+docker run -t -i -p 5001:5000 -v "${PWD}:/data" osrm/osrm-backend osrm-routed --algorithm mld /data/norte-latest.osrm
+
+
+
+# subir o servidor front end
+docker run -p 9966:9966 osrm/osrm-frontend -e OSRM_BACKEND='http://localhost:5001'
