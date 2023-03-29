@@ -83,7 +83,9 @@ function setup()
       'customers',
       'private',
       'delivery',
-      'destination'
+      'destination',
+      'ferry',
+      'unpaved'
     },
 
     -- tags disallow access to in combination with highway=service
@@ -135,8 +137,8 @@ function setup()
       'steps',
       'construction',
       'proposed',
-      'ferry',
       'unpaved',
+      'ferry',
       'unclassified'
     },
 
@@ -181,7 +183,6 @@ function setup()
       'tertiary_link',
       'residential',
       'living_street',
-      'unclassified',
       'service'
     },
 
@@ -192,7 +193,7 @@ function setup()
     },
 
     route_speeds = {
-      ferry = 5,
+      ferry = 0,
       shuttle_train = 10
     },
 
@@ -219,26 +220,26 @@ function setup()
       metal = 60,
       bricks = 60,
 
-      grass = 5,
-      wood = 5,
-      sett = 5,
-      grass_paver = 5,
-      gravel = 5,
-      unpaved = 5,
-      ground = 5,
-      dirt = 5,
-      pebblestone = 5,
-      tartan = 5,
+      grass = 40,
+      wood = 40,
+      sett = 40,
+      grass_paver = 40,
+      gravel = 40,
+      unpaved = 40,
+      ground = 40,
+      dirt = 40,
+      pebblestone = 40,
+      tartan = 40,
 
-      cobblestone = 5,
-      clay = 5,
+      cobblestone = 30,
+      clay = 30,
 
-      earth = 5,
-      stone = 5,
-      rocky = 5,
-      sand = 5,
+      earth = 20,
+      stone = 20,
+      rocky = 20,
+      sand = 20,
 
-      mud = 5
+      mud = 10
     },
 
     -- max speed for tracktypes
@@ -345,7 +346,18 @@ function process_node(profile, node, result, relations)
       local bollard = node:get_value_by_key("bollard")
       local rising_bollard = bollard and "rising" == bollard
 
-      if not profile.barrier_whitelist[barrier] and not rising_bollard or restricted_by_height then
+      -- make an exception for lowered/flat barrier=kerb
+      -- and incorrect tagging of highway crossing kerb as highway barrier
+      local kerb = node:get_value_by_key("kerb")
+      local highway = node:get_value_by_key("highway")
+      local flat_kerb = kerb and ("lowered" == kerb or "flush" == kerb)
+      local highway_crossing_kerb = barrier == "kerb" and highway and highway == "crossing"
+
+      if not profile.barrier_whitelist[barrier]
+                and not rising_bollard
+                and not flat_kerb
+                and not highway_crossing_kerb
+                or restricted_by_height then
         result.barrier = true
       end
     end
@@ -424,8 +436,8 @@ function process_way(profile, way, result, relations)
 
     -- compute speed taking into account way type, maxspeed tags, etc.
     WayHandlers.speed,
-    WayHandlers.surface,
     WayHandlers.maxspeed,
+    WayHandlers.surface,
     WayHandlers.penalties,
 
     -- compute class labels

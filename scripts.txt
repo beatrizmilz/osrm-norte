@@ -1,6 +1,16 @@
+# é necessário iniciar o docker!
+
 # referencias
+
 # https://hub.docker.com/r/osrm/osrm-backend/
 # https://hub.docker.com/r/osrm/osrm-frontend/
+
+# http://project-osrm.org/docs/v5.5.1/api/#general-options # API DA OSRM
+
+# arquivo "zerado" car.lua
+https://github.com/Project-OSRM/osrm-backend/blob/9d81eb327a74745be3af28308fcc798dd1a93723/profiles/car.lua#L129
+
+
 
 # Onde encontrar arquivos para baixar?
 # https://download.geofabrik.de/
@@ -17,6 +27,7 @@ wget https://download.geofabrik.de/south-america/brazil/norte-latest.osm.pbf
 # extrair os dados
 docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-extract -p /data/car-modified.lua /data/norte-latest.osm.pbf
 
+# preparar dados
 docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-partition /data/norte-latest.osrm
 docker run -t -v "${PWD}:/data" osrm/osrm-backend osrm-customize /data/norte-latest.osrm
 

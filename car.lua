@@ -134,10 +134,7 @@ function setup()
       'hov_lanes',
       'steps',
       'construction',
-      'proposed',
-      'ferry',
-      'unpaved',
-      'unclassified'
+      'proposed'
     },
 
     speeds = Sequence {
@@ -219,26 +216,26 @@ function setup()
       metal = 60,
       bricks = 60,
 
-      grass = 5,
-      wood = 5,
-      sett = 5,
-      grass_paver = 5,
-      gravel = 5,
-      unpaved = 5,
-      ground = 5,
-      dirt = 5,
-      pebblestone = 5,
-      tartan = 5,
+      grass = 40,
+      wood = 40,
+      sett = 40,
+      grass_paver = 40,
+      gravel = 40,
+      unpaved = 40,
+      ground = 40,
+      dirt = 40,
+      pebblestone = 40,
+      tartan = 40,
 
-      cobblestone = 5,
-      clay = 5,
+      cobblestone = 30,
+      clay = 30,
 
-      earth = 5,
-      stone = 5,
-      rocky = 5,
-      sand = 5,
+      earth = 20,
+      stone = 20,
+      rocky = 20,
+      sand = 20,
 
-      mud = 5
+      mud = 10
     },
 
     -- max speed for tracktypes
