@@ -220,26 +220,26 @@ function setup()
       metal = 60,
       bricks = 60,
 
-      grass = 40,
-      wood = 40,
-      sett = 40,
-      grass_paver = 40,
-      gravel = 40,
-      unpaved = 40,
-      ground = 40,
-      dirt = 40,
-      pebblestone = 40,
-      tartan = 40,
+      grass = 05,
+      wood = 05,
+      sett = 05,
+      grass_paver = 05,
+      gravel = 05,
+      unpaved = 05,
+      ground = 05,
+      dirt = 05,
+      pebblestone = 05,
+      tartan = 05,
 
-      cobblestone = 30,
-      clay = 30,
+      cobblestone = 05,
+      clay = 05,
 
-      earth = 20,
-      stone = 20,
-      rocky = 20,
-      sand = 20,
+      earth = 05,
+      stone = 05,
+      rocky = 05,
+      sand = 05,
 
-      mud = 10
+      mud = 05
     },
 
     -- max speed for tracktypes
